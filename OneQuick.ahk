@@ -90,13 +90,13 @@ return
 
 ;_______[下边缘]_______
 #If x>=a && x<A_ScreenWidth-(a+1) && y>=A_ScreenHeight-(a+1)
-$^MButton::
+$MButton::
 Send #{Tab}
 return
-$^WheelUp::
+$WheelUp::
 Send ^#{Left}
 return
-$^WheelDown::
+$WheelDown::
 Send ^#{Right}
 return
 #If

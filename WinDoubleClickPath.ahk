@@ -3,7 +3,7 @@ if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 300) ; 检测双击
 {
 MouseGetPos,,, winuid
 WinGet, winpath, ProcessPath, ahk_id %winuid%
-WinGet, winname, ProcessName, ahk_id %winuid%
+; WinGet, winname, ProcessName, ahk_id %winuid%
 ; WinGetTitle, wintitle, ahk_id %winuid%
 ;
 ; StringGetPos, pos, winpath, \, R
@@ -15,7 +15,7 @@ WinGet, winname, ProcessName, ahk_id %winuid%
 Run explorer /select`, %winpath%
 }
 return
-
+;
 ;特别地，在Notepad2-mod中Win+左键双击会打开当前文件的路径
 #IfWinActive ahk_class Notepad2U
 #LButton::
