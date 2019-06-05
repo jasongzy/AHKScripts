@@ -124,7 +124,7 @@ Run C:\Windows\Temp\qrcode_ahk.png
 return
 r::
 Run, %clipboard%,, UseErrorLevel
-If (UseErrorLevel != 0)
+If (A_LastError != 0)
     Msgbox,16 , Error, Wrong Command !
 return
 
