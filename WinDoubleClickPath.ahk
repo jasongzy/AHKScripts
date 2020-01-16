@@ -2,16 +2,18 @@
 if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 300) ; 检测双击
 {
 MouseGetPos,,, winuid ;若脚本无管理员权限，可能无法获取管理员窗口的uid
-;特别地，在Notepad2-mod中Win+左键双击会打开当前文件的路径
+;特别地，在Notepad3中Win+左键双击会打开当前文件的路径
 WinGetTitle, notetitle, ahk_id %winuid%
 WinGetClass, noteclass, ahk_id %winuid%
-If ((noteclass = "Notepad2U" || noteclass = "Notepad2") && notetitle != "无标题 - Notepad2-mod (管理员)" && notetitle != "无标题 - Notepad2-mod")
+If ((noteclass = "Notepad3U" || noteclass = "Notepad3") && notetitle != "未命名 - Notepad3（管理员权限）" && notetitle != "未命名 - Notepad3")
 {
 StringSplit, notepath, notetitle, :
 ;处理文件目录
-IfInString, notepath2, - Notepad2-mod (管理员)
-    StringTrimRight, notepath2, notepath2, 6
-StringTrimRight, notepath2, notepath2, 16
+IfInString, notepath2, - Notepad3（管理员权限）
+    StringTrimRight, notepath2, notepath2, 7
+StringTrimRight, notepath2, notepath2, 12
+IfInString, notepath2, 只读
+    StringTrimRight, notepath2, notepath2, 5
 StringRight, disk, notepath1, 1
 notepath2= %disk%:%notepath2%`\
 ;处理文件名
