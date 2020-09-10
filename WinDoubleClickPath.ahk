@@ -5,12 +5,12 @@ MouseGetPos,,, winuid ;若脚本无管理员权限，可能无法获取管理员
 ;特别地，在Notepad3中Win+左键双击会打开当前文件的路径
 WinGetTitle, notetitle, ahk_id %winuid%
 WinGetClass, noteclass, ahk_id %winuid%
-If ((noteclass = "Notepad3U" || noteclass = "Notepad3") && notetitle != "未命名 - Notepad3（管理员权限）" && notetitle != "未命名 - Notepad3")
+If ((noteclass = "Notepad3U" || noteclass = "Notepad3") && notetitle != "未命名 - Notepad3 （管理员权限）" && notetitle != "未命名 - Notepad3")
 {
 StringSplit, notepath, notetitle, :
 ;处理文件目录
-IfInString, notepath2, - Notepad3（管理员权限）
-    StringTrimRight, notepath2, notepath2, 7
+IfInString, notepath2, - Notepad3 （管理员权限）
+    StringTrimRight, notepath2, notepath2, 8
 StringTrimRight, notepath2, notepath2, 12
 IfInString, notepath2, 只读
     StringTrimRight, notepath2, notepath2, 5
