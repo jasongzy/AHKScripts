@@ -113,15 +113,17 @@ return
 
 ;定义快捷搜索的各按键命令
 ;这是第二处
-b:: Run https://www.baidu.com/s?wd=%clipboard%
-g:: Run https://google.com/search?q=%clipboard%
-f:: Run https://fanyi.baidu.com/translate?aldtype=16047&query=%clipboard%&keyfrom=baidu&smartresult=dict&lang=auto2zh
+b:: Run % "https://www.baidu.com/s?wd=" UrlEncode(clipboard)
+g:: Run % "https://google.com/search?q=" UrlEncode(clipboard)
+f:: Run % "https://fanyi.baidu.com/translate?aldtype=16047&query=" UrlEncode(clipboard) "&keyfrom=baidu&smartresult=dict&lang=auto2zh"
+
 q::
 UrlDownloadToFile, http://api.qrserver.com/v1/create-qr-code/?data=%clipboard%, C:\Windows\Temp\qrcode_ahk.png
 Run C:\Windows\Temp\qrcode_ahk.png
 ;Sleep 2000
 ;FileDelete, C:\Windows\Temp\qrcode_ahk.png
 return
+
 r::
 Run, %clipboard%,, UseErrorLevel
 If (A_LastError != 0)
@@ -149,3 +151,12 @@ Hotkey, q, Off
 Hotkey, r, Off
 }
 return
+
+UrlEncode(str, enc="UTF-8")
+{
+hex := "00", func := "msvcrt\" . (A_IsUnicode ? "swprintf" : "sprintf")
+VarSetCapacity(buff, size:=StrPut(str, enc)), StrPut(str, &buff, enc)
+While (code := NumGet(buff, A_Index - 1, "UChar")) && DllCall(func, "Str", hex, "Str", "%%%02X", "UChar", code, "Cdecl")
+encoded .= hex
+Return encoded
+}
