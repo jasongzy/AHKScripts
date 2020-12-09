@@ -5,22 +5,17 @@ MouseGetPos,,, winuid ;若脚本无管理员权限，可能无法获取管理员
 ;特别地，在Notepad3中Win+左键双击会打开当前文件的路径
 WinGetTitle, notetitle, ahk_id %winuid%
 WinGetClass, noteclass, ahk_id %winuid%
-If ((noteclass = "Notepad3U" || noteclass = "Notepad3") && notetitle != "未命名 - Notepad3 （管理员权限）" && notetitle != "未命名 - Notepad3")
+If ((noteclass = "Notepad3U" || noteclass = "Notepad3") && RegExMatch(notetitle, "\[(.*?)\]", notepath1) != 0 && RegExMatch(notetitle, "(.*?)\[", notepath2) != 0)
+;RegExMatch返回为0表示正则未匹配到字串，说明窗口标题类似“未命名 - Notepad3”（新建且尚未保存的文件）
 {
-StringSplit, notepath, notetitle, :
 ;处理文件目录
-IfInString, notepath2, - Notepad3 （管理员权限）
-    StringTrimRight, notepath2, notepath2, 8
-StringTrimRight, notepath2, notepath2, 12
-IfInString, notepath2, 只读
-    StringTrimRight, notepath2, notepath2, 5
-StringRight, disk, notepath1, 1
-notepath2= %disk%:%notepath2%`\
+;RegExMatch(notetitle, "\[(.*?)\]", notepath1)
+StringTrimLeft, notepath1, notepath1, 1
+StringTrimRight, notepath1, notepath1, 1
 ;处理文件名
-IfInString, notepath1, *
-    StringTrimLeft, notepath1, notepath1, 2
-StringTrimRight, notepath1, notepath1, 3
-notepath= %notepath2%%notepath1%
+;RegExMatch(notetitle, "(.*?)\[", notepath2)
+StringTrimRight, notepath2, notepath2, 2
+notepath= %notepath1%`\%notepath2%
 Run explorer /select`, %notepath%
 return
 }
