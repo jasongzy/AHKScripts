@@ -12,10 +12,21 @@ If ((noteclass = "Notepad3U" || noteclass = "Notepad3") && RegExMatch(notetitle,
 ;RegExMatch(notetitle, "\[(.*?)\]", notepath1)
 StringTrimLeft, notepath1, notepath1, 1
 StringTrimRight, notepath1, notepath1, 1
+StringRight, notepath1_end, notepath1, 1
+if (notepath1_end = "\") ;以\结尾的路径一般出现在磁盘根目录
+{
+StringTrimRight, notepath1, notepath1, 1
+}
 ;处理文件名
 ;RegExMatch(notetitle, "(.*?)\[", notepath2)
+StringLeft, notepath2_start, notepath2, 1
+if (notepath2_start = "*") ;以*开头的文件名表示已修改、未保存的文件
+{
+StringTrimLeft, notepath2, notepath2, 2
+}
 StringTrimRight, notepath2, notepath2, 2
 notepath= %notepath1%`\%notepath2%
+;MsgBox, %notepath%
 Run explorer /select`, %notepath%
 return
 }
