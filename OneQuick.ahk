@@ -2,6 +2,8 @@
 #NoEnv
 SetBatchLines -1
 
+Menu, Tray, Icon, OneQuick.ico,, 1
+
 ;给快捷搜索使用，平常不启用
 ;每添加一个按键命令需要修改四处
 ;这是第一处
@@ -10,6 +12,7 @@ Hotkey, g, Off
 Hotkey, f, Off
 Hotkey, q, Off
 Hotkey, r, Off
+Hotkey, s, Off
 
 CoordMode, Mouse, Screen ;指定鼠标坐标以屏幕为基准
 a:=10 ;a=最多离开边缘多少像素
@@ -90,13 +93,13 @@ return
 
 ;_______[下边缘]_______
 #If x>=a && x<A_ScreenWidth-(a+1) && y>=A_ScreenHeight-(a+1)
-$MButton::
+$^MButton::
 Send #{Tab}
 return
-$WheelUp::
+$^WheelUp::
 Send ^#{Left}
 return
-$WheelDown::
+$^WheelDown::
 Send ^#{Right}
 return
 #If
@@ -130,6 +133,8 @@ If (A_LastError != 0)
     Msgbox,16 , Error, Wrong Command !
 return
 
+s:: Run % "https://scholar.google.com/scholar?q=" UrlEncode(clipboard)
+
 ~^c::
 if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 500) ; 检测双击
 {
@@ -139,6 +144,7 @@ Hotkey, g, On
 Hotkey, f, On
 Hotkey, q, On
 Hotkey, r, On
+Hotkey, s, On
 ;KeyWait, b, D T2
 ;If ErrorLevel = 0
 ;If (%A_ThisHotkey% = b)
@@ -149,6 +155,7 @@ Hotkey, g, Off
 Hotkey, f, Off
 Hotkey, q, Off
 Hotkey, r, Off
+Hotkey, s, off
 }
 return
 
