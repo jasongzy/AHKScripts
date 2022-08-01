@@ -40,14 +40,15 @@ MOUSEHOVER(){ ;鼠标位置函数调用
 ;_______[左上角]_______
 #If x<a&&y<a
 $MButton:: ;切换静音
-Send {Volume_Mute}
+	Send {Volume_Mute}
 return
 $WheelUp:: ;增大音量
-Send {Volume_Up}
+	Send {Volume_Up}
 return
 $WheelDown:: ;减小音量
-Send {Volume_Down}
+	Send {Volume_Down}
 return
+#If
 
 ;_______[上边缘]_______
 #If x>=a && x<A_ScreenWidth-(a+1) && y<a
@@ -74,10 +75,10 @@ return
 ;$MButton::
 ;return
 $WheelUp::
-Send {PgUp}
+	Send {PgUp}
 return
 $WheelDown::
-Send {PgDn}
+	Send {PgDn}
 return
 #If
 
@@ -94,13 +95,13 @@ return
 ;_______[下边缘]_______
 #If x>=a && x<A_ScreenWidth-(a+1) && y>=A_ScreenHeight-(a+1)
 $^MButton::
-Send #{Tab}
+	Send #{Tab}
 return
 $^WheelUp::
-Send ^#{Left}
+	Send ^#{Left}
 return
 $^WheelDown::
-Send ^#{Right}
+	Send ^#{Right}
 return
 #If
 
@@ -121,49 +122,49 @@ g:: Run % "https://google.com/search?q=" UrlEncode(clipboard)
 f:: Run % "https://fanyi.baidu.com/translate?aldtype=16047&query=" UrlEncode(clipboard) "&keyfrom=baidu&smartresult=dict&lang=auto2zh"
 
 q::
-UrlDownloadToFile, http://api.qrserver.com/v1/create-qr-code/?data=%clipboard%, C:\Windows\Temp\qrcode_ahk.png
-Run C:\Windows\Temp\qrcode_ahk.png
-;Sleep 2000
-;FileDelete, C:\Windows\Temp\qrcode_ahk.png
+	UrlDownloadToFile, http://api.qrserver.com/v1/create-qr-code/?data=%clipboard%, C:\Windows\Temp\qrcode_ahk.png
+	Run C:\Windows\Temp\qrcode_ahk.png
+	;Sleep 2000
+	;FileDelete, C:\Windows\Temp\qrcode_ahk.png
 return
 
 r::
-Run, %clipboard%,, UseErrorLevel
-If (A_LastError != 0)
-    Msgbox,16 , Error, Wrong Command !
+	Run, %clipboard%,, UseErrorLevel
+	If (A_LastError != 0)
+		Msgbox,16 , Error, Wrong Command !
 return
 
 s:: Run % "https://scholar.google.com/scholar?q=" UrlEncode(clipboard)
 
 ~^c::
-if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 500) ; 检测双击
-{
-;这是第三处
-Hotkey, b, On
-Hotkey, g, On
-Hotkey, f, On
-Hotkey, q, On
-Hotkey, r, On
-Hotkey, s, On
-;KeyWait, b, D T2
-;If ErrorLevel = 0
-;If (%A_ThisHotkey% = b)
-Sleep 2000
-;这是第四处
-Hotkey, b, Off
-Hotkey, g, Off
-Hotkey, f, Off
-Hotkey, q, Off
-Hotkey, r, Off
-Hotkey, s, off
-}
+	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 500) ; 检测双击
+	{
+		;这是第三处
+		Hotkey, b, On
+		Hotkey, g, On
+		Hotkey, f, On
+		Hotkey, q, On
+		Hotkey, r, On
+		Hotkey, s, On
+		;KeyWait, b, D T2
+		;If ErrorLevel = 0
+		;If (%A_ThisHotkey% = b)
+		Sleep 2000
+		;这是第四处
+		Hotkey, b, Off
+		Hotkey, g, Off
+		Hotkey, f, Off
+		Hotkey, q, Off
+		Hotkey, r, Off
+		Hotkey, s, off
+	}
 return
 
 UrlEncode(str, enc="UTF-8")
 {
-hex := "00", func := "msvcrt\" . (A_IsUnicode ? "swprintf" : "sprintf")
-VarSetCapacity(buff, size:=StrPut(str, enc)), StrPut(str, &buff, enc)
-While (code := NumGet(buff, A_Index - 1, "UChar")) && DllCall(func, "Str", hex, "Str", "%%%02X", "UChar", code, "Cdecl")
-encoded .= hex
+	hex := "00", func := "msvcrt\" . (A_IsUnicode ? "swprintf" : "sprintf")
+	VarSetCapacity(buff, size:=StrPut(str, enc)), StrPut(str, &buff, enc)
+	While (code := NumGet(buff, A_Index - 1, "UChar")) && DllCall(func, "Str", hex, "Str", "%%%02X", "UChar", code, "Cdecl")
+		encoded .= hex
 Return encoded
 }
